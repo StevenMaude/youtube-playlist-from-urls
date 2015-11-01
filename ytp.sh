@@ -9,18 +9,14 @@
 # Licensed under GPLv3.
 set -eu
 
-mystring=""
-OIFS=$IFS
-IFS="="
-
-while read BASE_URL ID
+ids=
+while IFS="=" read base_url id
 do
-  if [ "$mystring" = "" ]; then
-    mystring="$ID"
+  if [ -z "$ids" ]; then
+    ids="$id"
   else
-    mystring="${mystring},${ID}"
+    ids="${ids},${id}"
   fi
 done <$1
 
-IFS=$OIFS
-echo "https://www.youtube.com/watch_videos?video_ids=${mystring}"
+echo "https://www.youtube.com/watch_videos?video_ids=$ids"
